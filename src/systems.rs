@@ -212,7 +212,6 @@ mod tests {
     #[test]
     fn over_min_damage_test() {
         let mut app = build_app();
-        let src = app.world_mut().spawn(Name::new("Source")).id();
         let trgt = app.world_mut().spawn((
             Name::new("Target"),
             MinDamage(5.),
