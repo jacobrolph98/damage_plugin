@@ -1,4 +1,4 @@
-##Interface with this library with the following;
+Interface with this library with the following;
 ### Messages
 - Write DamageMessage
     - Target entity, amount, and optionally source entity
