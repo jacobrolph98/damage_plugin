@@ -16,6 +16,6 @@ pub struct HealMessage {
 
 #[derive(Message)]
 pub struct FatalHitMessage {
-    pub victim: Entity,
-    pub killer: Option<Entity>
+    pub target: Entity,
+    pub source: Option<Entity>
 }

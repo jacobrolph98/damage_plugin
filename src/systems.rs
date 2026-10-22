@@ -40,7 +40,7 @@ pub fn deal_damage(
             }
         }        
         let dealt_damage = if dealt_damage >= health.0 { 
-            death_msgs.write(FatalHitMessage { victim: damage.target, killer: damage.source});
+            death_msgs.write(FatalHitMessage { target: damage.target, source: damage.source});
             health.0
          } else { 
             dealt_damage 

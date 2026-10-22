@@ -1,3 +1,28 @@
+This library provides various components, messages & systems to handle the storage & change of health of entities. 
+```
+let npc_entity = commands.spawn((
+    Name::new("NPC"),
+    Health(100.),
+    MaxHealth(100.), // Optional but recommended
+)).id();
+
+damage_msg.write(DamageMessage {
+    target: npc_entity,
+    source: None,
+    amount: 20.,
+});
+
+heal_msg.write(HealMessage {
+    target: npc_entity,
+    source: None,
+    amount: 10.,
+});
+
+for fatality in fatal_hits_msg.read() {
+    info!("Entity has 0 health, despawning");
+    commands.entity(fatality.target).despawn();
+}
+```
 Interface with this library with the following;
 ### Messages
 - Write DamageMessage
@@ -8,14 +33,14 @@ Interface with this library with the following;
     - Written when an entity's health reaches 0
 
 ### Components
-- Health
-    - f32 amount
+- Health, f32
+    - Naturally, everything this plugin interacts with requires this component
 - MaxHealth (optional)
     - Health will not go above this value 
 - DamageMultiplier
-    - Multiplies incoming damage by f32 
+    - Multiplies incoming damage
 - HealMultiplier
-    - Multiplies incoming healing by f32 
+    - Multiplies incoming healing
 - MaxDamage
     - Incoming damage will be capped to this value
 - MinDamage
