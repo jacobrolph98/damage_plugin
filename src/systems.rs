@@ -15,13 +15,13 @@ pub fn deal_damage(
 ) {
     for damage in damage_msgs.read() {
         if damage.amount <= 0. { continue }
-        let (
+        let Ok((
             mut health, 
             has_max_dam, 
             has_min_dam, 
             has_armour, 
             has_mult
-        ) = health_q.get_mut(damage.target).expect("Target entity has no health");
+        )) = health_q.get_mut(damage.target) else { continue };
         let mut dealt_damage = damage.amount;
         if let Some(multiplier) = has_mult {
             dealt_damage *= multiplier.0;
@@ -55,7 +55,7 @@ pub fn deal_healing(
 ) {
     for heal in heal_msgs.read() {
         if heal.amount <= 0. { continue }
-        let (mut health, has_max_health, has_mult) = health_q.get_mut(heal.target).expect("Target entity has no health");
+        let Ok((mut health, has_max_health, has_mult)) = health_q.get_mut(heal.target) else { continue };
         let mut dealt_healing = heal.amount;
         if let Some(multiplier) = has_mult {
             dealt_healing *= multiplier.0;
