@@ -12,10 +12,6 @@ mod tests {
         app
     }
 
-    fn test_armour_formula(damage: f32, rating: f32) -> f32 {
-        damage * (1. / rating)
-    }
-
     #[test]
     fn damage_test() {
         let mut app = build_app();
@@ -180,7 +176,7 @@ mod tests {
             Name::new("Target"),
             Armour {
                 rating: 2.,
-                formula: test_armour_formula // 1/rating 
+                formula: |damage, rating| damage * (1.0 / rating)
             },
             Health(10.),
         )).id();
