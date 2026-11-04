@@ -9,43 +9,47 @@ pub fn deal_damage(
         Option<&MaxDamage>, 
         Option<&MinDamage>, 
         Option<&Armour>,
-        Option<&DamageMultiplier>,
+        Option<&DamageModifier>,
     )>,
     mut death_msgs: MessageWriter<FatalHitMessage>,
 ) {
-    for damage in damage_msgs.read() {
-        if damage.amount <= 0. { continue }
-        let Ok((
-            mut health, 
-            has_max_dam, 
-            has_min_dam, 
-            has_armour, 
-            has_mult
-        )) = health_q.get_mut(damage.target) else { continue };
-        let mut dealt_damage = damage.amount;
-        if let Some(multiplier) = has_mult {
-            dealt_damage *= multiplier.0;
-        }
-        if let Some(armour) = has_armour {
-            dealt_damage = armour.apply_armour(dealt_damage);
-        }
-        if let Some(minimum) = has_min_dam {
-            if dealt_damage < minimum.0 {
-                dealt_damage *= 0.;
+    for damage_msg in damage_msgs.read() {
+        for dam_instance in &damage_msg.damage.0 {
+            if dam_instance.amount <= 0. { continue }
+            let Ok((
+                mut health, 
+                has_max_dam, 
+                has_min_dam, 
+                has_armour, 
+                has_mod
+            )) = health_q.get_mut(damage_msg.target) else { continue };
+            let mut dealt_damage = dam_instance.amount;
+            if let Some(modifier) = has_mod {
+                if let Some(modifier) = modifier.0.get(&dam_instance.dam_type) {
+                    dealt_damage = (modifier)(dealt_damage);
+                }
             }
-        }
-        if let Some(maximum) = has_max_dam {
-            if dealt_damage > maximum.0 {
-                dealt_damage = maximum.0;
+            if let Some(armour) = has_armour {
+                dealt_damage = armour.apply_armour(dealt_damage);
             }
-        }        
-        let dealt_damage = if dealt_damage >= health.0 { 
-            death_msgs.write(FatalHitMessage { target: damage.target, source: damage.source});
-            health.0
-         } else { 
-            dealt_damage 
-        };
-        health.0 -= dealt_damage;
+            if let Some(minimum) = has_min_dam {
+                if dealt_damage < minimum.0 {
+                    dealt_damage *= 0.;
+                }
+            }
+            if let Some(maximum) = has_max_dam {
+                if dealt_damage > maximum.0 {
+                    dealt_damage = maximum.0;
+                }
+            }        
+            let dealt_damage = if dealt_damage >= health.0 { 
+                death_msgs.write(FatalHitMessage { target: damage_msg.target, source: damage_msg.source});
+                health.0
+            } else { 
+                dealt_damage 
+            };
+            health.0 -= dealt_damage;
+        }
     }
 }
 

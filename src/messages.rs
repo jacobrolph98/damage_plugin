@@ -1,9 +1,11 @@
 use bevy::prelude::*;
 
+use crate::types::*;
+
 #[derive(Message)]
 pub struct DamageMessage {
     pub target: Entity,
-    pub amount: f32,
+    pub damage: Damage,
     pub source: Option<Entity>
 }
 
