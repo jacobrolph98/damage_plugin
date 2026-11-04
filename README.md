@@ -31,6 +31,8 @@ Interface with this library with the following;
     - Target, amount, optionally source
 - Read FatalHitMessage
     - Written when an entity's health reaches 0
+- Read ReportDamageMessage / ReportHealMessage
+    - Written when damage/healing is inflicted, reporting the amount dealt after modifiers were applied
 
 ### Components
 - Health, f32

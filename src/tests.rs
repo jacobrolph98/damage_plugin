@@ -31,7 +31,7 @@ mod tests {
             Name::new("Target"),
             Health(10.),
         )).id();
-        app.world_mut().write_message(DamageMessage {
+        app.world_mut().write_message(InflictDamageMessage {
             target: trgt,
             source: None,
             damage: Damage::new(&[(None, 5.)])
@@ -48,7 +48,7 @@ mod tests {
             Name::new("Target"),
             Health(10.),
         )).id();
-        app.world_mut().write_message(DamageMessage {
+        app.world_mut().write_message(InflictDamageMessage {
             target: trgt,
             source: None,
             damage: Damage::new(&[(None, 10.)])
@@ -65,7 +65,7 @@ mod tests {
             Name::new("Target"),
             Health(10.),
         )).id();
-        app.world_mut().write_message(DamageMessage {
+        app.world_mut().write_message(InflictDamageMessage {
             target: trgt,
             source: None,
             damage: Damage::new(&[(None, -5.)])
@@ -82,7 +82,7 @@ mod tests {
             Name::new("Target"),
             Health(10.),
         )).id();
-        app.world_mut().write_message(HealMessage {
+        app.world_mut().write_message(InflictHealMessage {
             target: trgt,
             source: None,
             amount: 5.,
@@ -99,7 +99,7 @@ mod tests {
             Name::new("Target"),
             Health(10.),
         )).id();
-        app.world_mut().write_message(HealMessage {
+        app.world_mut().write_message(InflictHealMessage {
             target: trgt,
             source: None,
             amount: -5.,
@@ -117,7 +117,7 @@ mod tests {
             Health(8.),
             MaxHealth(10.)
         )).id();
-        app.world_mut().write_message(HealMessage {
+        app.world_mut().write_message(InflictHealMessage {
             target: trgt,
             source: None,
             amount: 4.,
@@ -135,7 +135,7 @@ mod tests {
             MaxDamage(5.),
             Health(10.),
         )).id();
-        app.world_mut().write_message(DamageMessage {
+        app.world_mut().write_message(InflictDamageMessage {
             target: trgt,
             source: None,
             damage: Damage::new(&[(None, 8.)])
@@ -153,7 +153,7 @@ mod tests {
             MinDamage(5.),
             Health(10.),
         )).id();
-        app.world_mut().write_message(DamageMessage {
+        app.world_mut().write_message(InflictDamageMessage {
             target: trgt,
             source: None,
             damage: Damage::new(&[(None, 8.)])
@@ -171,7 +171,7 @@ mod tests {
             MinDamage(5.),
             Health(10.),
         )).id();
-        app.world_mut().write_message(DamageMessage {
+        app.world_mut().write_message(InflictDamageMessage {
             target: trgt,
             source: None,
             damage: Damage::new(&[(None, 3.)])
@@ -192,7 +192,7 @@ mod tests {
             },
             Health(10.),
         )).id();
-        app.world_mut().write_message(DamageMessage {
+        app.world_mut().write_message(InflictDamageMessage {
             target: trgt,
             source: None,
             damage: Damage::new(&[(None, 8.)])
@@ -212,7 +212,7 @@ mod tests {
             DamageModifier(HashMap::from([(None, f1)])),
             Health(10.),
         )).id();
-        app.world_mut().write_message(DamageMessage {
+        app.world_mut().write_message(InflictDamageMessage {
             target: trgt_1,
             source: None,
             damage: Damage::new(&[(None, 6.)])
@@ -224,7 +224,7 @@ mod tests {
             DamageModifier(HashMap::from([(Some(0), f2)])),
             Health(10.),
         )).id();
-        app.world_mut().write_message(DamageMessage {
+        app.world_mut().write_message(InflictDamageMessage {
             target: trgt_2,
             source: None,
             damage: Damage::new(&[(Some(0), 4.)])

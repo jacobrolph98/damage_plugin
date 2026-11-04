@@ -3,17 +3,31 @@ use bevy::prelude::*;
 use crate::types::*;
 
 #[derive(Message)]
-pub struct DamageMessage {
+pub struct InflictDamageMessage {
     pub target: Entity,
     pub damage: Damage,
     pub source: Option<Entity>
 }
 
 #[derive(Message)]
-pub struct HealMessage {
+pub struct ReportDamageMessage {
+    pub target: Entity,
+    pub amount: f32,
+    pub source: Option<Entity>,
+}
+
+#[derive(Message)]
+pub struct InflictHealMessage {
     pub target: Entity,
     pub amount: f32,
     pub source: Option<Entity>
+}
+
+#[derive(Message)]
+pub struct ReportHealMessage {
+    pub target: Entity,
+    pub amount: f32,
+    pub source: Option<Entity>,
 }
 
 #[derive(Message)]
