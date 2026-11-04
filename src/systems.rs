@@ -54,6 +54,7 @@ pub fn deal_damage(
             net_damage += dealt_damage;
             health.0 -= dealt_damage;
         }
+        if net_damage == 0. { continue };
         report_w.write(ReportDamageMessage {
             target: damage_msg.target,
             amount: net_damage,

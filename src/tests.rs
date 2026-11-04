@@ -39,6 +39,8 @@ mod tests {
         step(&mut app);
         let health = app.world().get::<Health>(trgt).unwrap();
         assert_eq!(health.0, 5.);
+        let reports = app.world().resource::<Messages<ReportDamageMessage>>();
+        assert_eq!(reports.len(), 1);
     }
 
     #[test]
@@ -73,6 +75,8 @@ mod tests {
         step(&mut app);
         let health = app.world().get::<Health>(trgt).unwrap();
         assert_eq!(health.0, 10.);
+        let reports = app.world().resource::<Messages<ReportDamageMessage>>();
+        assert_eq!(reports.len(), 0);
     }
 
     #[test]
@@ -90,6 +94,8 @@ mod tests {
         step(&mut app);
         let health = app.world().get::<Health>(trgt).unwrap();
         assert_eq!(health.0, 15.);
+        let reports = app.world().resource::<Messages<ReportHealMessage>>();
+        assert_eq!(reports.len(), 1);
     }
 
     #[test]
@@ -107,6 +113,8 @@ mod tests {
         step(&mut app);
         let health = app.world().get::<Health>(trgt).unwrap();
         assert_eq!(health.0, 10.);
+        let reports = app.world().resource::<Messages<ReportHealMessage>>();
+        assert_eq!(reports.len(), 0);
     }
 
     #[test]
@@ -179,6 +187,8 @@ mod tests {
         step(&mut app);
         let health = app.world().get::<Health>(trgt).unwrap();
         assert_eq!(health.0, 10.);
+        let reports = app.world().resource::<Messages<ReportDamageMessage>>();
+        assert_eq!(reports.len(), 0);
     }
 
     #[test]
